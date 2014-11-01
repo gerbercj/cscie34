@@ -1,4 +1,5 @@
 class DeploysController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_deploy, only: [:show, :edit, :update, :destroy]
 
   # GET /deploys
@@ -14,7 +15,11 @@ class DeploysController < ApplicationController
 
   # GET /deploys/new
   def new
+    # for the drop-down lists
+    @projects = Project.all.map {|p| ["#{p.account}/#{p.repository}", p.id] }
+
     @deploy = Deploy.new
+    @deploy.requestor = current_user
   end
 
   # GET /deploys/1/edit

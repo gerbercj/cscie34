@@ -1,4 +1,5 @@
 class DeployCommandsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_deploy_command, only: [:show, :edit, :update, :destroy]
 
   # GET /deploy_commands

@@ -1,4 +1,5 @@
 class DeployEventsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_deploy_event, only: [:show, :edit, :update, :destroy]
 
   # GET /deploy_events

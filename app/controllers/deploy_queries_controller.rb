@@ -1,4 +1,5 @@
 class DeployQueriesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_deploy_query, only: [:show, :edit, :update, :destroy]
 
   # GET /deploy_queries

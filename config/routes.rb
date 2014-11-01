@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :deploy_commands
 
   resources :deploy_queries
@@ -10,6 +11,8 @@ Rails.application.routes.draw do
   resources :users
 
   resources :projects
+
+  root 'deploys#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
