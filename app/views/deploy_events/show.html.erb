@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Deploy:</strong>
+  <%= @deploy_event.deploy_id %>
+</p>
+
+<p>
+  <strong>Message:</strong>
+  <%= @deploy_event.message %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @deploy_event.status %>
+</p>
+
+<%= link_to 'Edit', edit_deploy_event_path(@deploy_event) %> |
+<%= link_to 'Back', deploy_events_path %>

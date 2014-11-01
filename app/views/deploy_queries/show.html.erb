@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Deploy:</strong>
+  <%= @deploy_query.deploy_id %>
+</p>
+
+<p>
+  <strong>Query:</strong>
+  <%= @deploy_query.query %>
+</p>
+
+<p>
+  <strong>Expected result:</strong>
+  <%= @deploy_query.expected_result %>
+</p>
+
+<p>
+  <strong>Actual result:</strong>
+  <%= @deploy_query.actual_result %>
+</p>
+
+<%= link_to 'Edit', edit_deploy_query_path(@deploy_query) %> |
+<%= link_to 'Back', deploy_queries_path %>

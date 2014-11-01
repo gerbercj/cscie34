@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Account:</strong>
+  <%= @project.account %>
+</p>
+
+<p>
+  <strong>Repository:</strong>
+  <%= @project.repository %>
+</p>
+
+<p>
+  <strong>Hosts:</strong>
+  <%= @project.hosts %>
+</p>
+
+<%= link_to 'Edit', edit_project_path(@project) %> |
+<%= link_to 'Back', projects_path %>

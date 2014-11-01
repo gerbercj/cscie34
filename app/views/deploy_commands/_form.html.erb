@@ -1,0 +1,33 @@
+<%= form_for(@deploy_command) do |f| %>
+  <% if @deploy_command.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@deploy_command.errors.count, "error") %> prohibited this deploy_command from being saved:</h2>
+
+      <ul>
+      <% @deploy_command.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :deploy_id %><br>
+    <%= f.number_field :deploy_id %>
+  </div>
+  <div class="field">
+    <%= f.label :command %><br>
+    <%= f.text_area :command %>
+  </div>
+  <div class="field">
+    <%= f.label :parameters %><br>
+    <%= f.text_area :parameters %>
+  </div>
+  <div class="field">
+    <%= f.label :result %><br>
+    <%= f.text_area :result %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

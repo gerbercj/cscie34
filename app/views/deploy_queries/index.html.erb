@@ -1,0 +1,31 @@
+<h1>Listing deploy_queries</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Deploy</th>
+      <th>Query</th>
+      <th>Expected result</th>
+      <th>Actual result</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @deploy_queries.each do |deploy_query| %>
+      <tr>
+        <td><%= deploy_query.deploy_id %></td>
+        <td><%= deploy_query.query %></td>
+        <td><%= deploy_query.expected_result %></td>
+        <td><%= deploy_query.actual_result %></td>
+        <td><%= link_to 'Show', deploy_query %></td>
+        <td><%= link_to 'Edit', edit_deploy_query_path(deploy_query) %></td>
+        <td><%= link_to 'Destroy', deploy_query, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Deploy query', new_deploy_query_path %>

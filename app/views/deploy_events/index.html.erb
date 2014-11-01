@@ -1,0 +1,29 @@
+<h1>Listing deploy_events</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Deploy</th>
+      <th>Message</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @deploy_events.each do |deploy_event| %>
+      <tr>
+        <td><%= deploy_event.deploy_id %></td>
+        <td><%= deploy_event.message %></td>
+        <td><%= deploy_event.status %></td>
+        <td><%= link_to 'Show', deploy_event %></td>
+        <td><%= link_to 'Edit', edit_deploy_event_path(deploy_event) %></td>
+        <td><%= link_to 'Destroy', deploy_event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Deploy event', new_deploy_event_path %>

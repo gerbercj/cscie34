@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Project:</strong>
+  <%= @deploy.project_id %>
+</p>
+
+<p>
+  <strong>Requestor:</strong>
+  <%= @deploy.requestor_id %>
+</p>
+
+<p>
+  <strong>Pull request:</strong>
+  <%= @deploy.pull_request %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @deploy.state %>
+</p>
+
+<p>
+  <strong>Sha:</strong>
+  <%= @deploy.sha %>
+</p>
+
+<p>
+  <strong>Branch:</strong>
+  <%= @deploy.branch %>
+</p>
+
+<%= link_to 'Edit', edit_deploy_path(@deploy) %> |
+<%= link_to 'Back', deploys_path %>

@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Deploy:</strong>
+  <%= @deploy_command.deploy_id %>
+</p>
+
+<p>
+  <strong>Command:</strong>
+  <%= @deploy_command.command %>
+</p>
+
+<p>
+  <strong>Parameters:</strong>
+  <%= @deploy_command.parameters %>
+</p>
+
+<p>
+  <strong>Result:</strong>
+  <%= @deploy_command.result %>
+</p>
+
+<%= link_to 'Edit', edit_deploy_command_path(@deploy_command) %> |
+<%= link_to 'Back', deploy_commands_path %>
