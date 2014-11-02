@@ -3,36 +3,34 @@
   ll('tagScreen', 'Deploy Status');
 </script>
 
-<p>
-  <strong>Project:</strong>
-  <%= @deploy.project_id %>
-</p>
+<%- model_class = Deploy -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+</div>
 
-<p>
-  <strong>Requestor:</strong>
-  <%= @deploy.requestor_id %>
-</p>
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:project_id) %>:</strong></dt>
+  <dd><%= @deploy.project_id %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:requestor_id) %>:</strong></dt>
+  <dd><%= @deploy.requestor_id %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:pull_request) %>:</strong></dt>
+  <dd><%= @deploy.pull_request %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:state) %>:</strong></dt>
+  <dd><%= @deploy.state %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:sha) %>:</strong></dt>
+  <dd><%= @deploy.sha %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:branch) %>:</strong></dt>
+  <dd><%= @deploy.branch %></dd>
+</dl>
 
-<p>
-  <strong>Pull request:</strong>
-  <%= @deploy.pull_request %>
-</p>
-
-<p>
-  <strong>State:</strong>
-  <%= @deploy.state %>
-</p>
-
-<p>
-  <strong>Sha:</strong>
-  <%= @deploy.sha %>
-</p>
-
-<p>
-  <strong>Branch:</strong>
-  <%= @deploy.branch %>
-</p>
-
-<%= link_to 'Edit', edit_deploy_path(@deploy) %> |
-<%= link_to 'Details', "#{deploy_path(@deploy)}/details" %> |
-<%= link_to 'Back', deploys_path %>
+<%= link_to t('.back', :default => t("helpers.links.back")),
+              deploys_path, :class => 'btn btn-default'  %>
+<%= link_to t('.details', :default => t("helpers.links.details")),
+              "#{deploy_path(@deploy)}/details", :class => 'btn btn-default' %>
+<%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_deploy_path(@deploy), :class => 'btn btn-default' %>
+<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              deploy_path(@deploy),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>

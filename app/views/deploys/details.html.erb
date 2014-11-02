@@ -2,4 +2,6 @@
   console.log('tagScreen: Deploy Details');
   ll('tagScreen', 'Deploy Details');
 </script>
-<%= link_to 'Back', deploy_path(@deploy) %>
+
+<%= link_to t('.back', :default => t("helpers.links.back")),
+              deploys_path, :class => 'btn btn-default'  %>

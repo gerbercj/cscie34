@@ -1,27 +1,38 @@
-<%= form_for(@deploy) do |f| %>
-  <% if @deploy.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@deploy.errors.count, "error") %> prohibited this deploy from being saved:</h2>
+<%= form_for @deploy, :html => { :class => "form-horizontal deploy" } do |f| %>
 
-      <ul>
-      <% @deploy.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+    <% if @deploy.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@deploy.errors.count, "error") %> prohibited this deploy from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @deploy.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :project_id %><br>
-    <%= f.select :project_id, options_for_select(@projects) %>
+  <div class="control-group">
+    <%= f.label :project_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.select :project_id, options_for_select(@projects), :class => 'form-control' %>
+    </div>
+    <%= error_span(@deploy[:project_id]) %>
   </div>
-  <div class="field">
-    <%= f.label :pull_request %><br>
-    <%= f.number_field :pull_request %>
+  <div class="control-group">
+    <%= f.label :pull_request, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :pull_request, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deploy[:pull_request]) %>
   </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            deploys_path, :class => 'btn btn-default' %>
 
   <script>
     $('#deploy_project_id').change(function() {
