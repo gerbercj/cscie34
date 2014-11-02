@@ -5,6 +5,19 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <script>
+    +function(l,y,t,i,c,s) {
+      l['LocalyticsGlobal'] = i;
+      l[i] = function() { (l[i].q = l[i].q || []).push(arguments) };
+      l[i].t = +new Date;
+      (s = y.createElement(t)).type = 'text/javascript';
+      s.src = '//web.localytics.com/v3/localytics.min.js';
+      (c = y.getElementsByTagName(t)[0]).parentNode.insertBefore(s, c);
+
+      ll('init', '3c6a144ce8b0f37ce974156-003acf86-6227-11e4-4e37-00a426b17dd8', {trackPageView: true} /* Options */);
+
+    }(window, document, 'script', 'll');
+  </script>
 </head>
 <body>
   <p class="notice"><%= notice %></p>

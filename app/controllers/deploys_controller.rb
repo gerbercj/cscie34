@@ -15,21 +15,21 @@ class DeploysController < ApplicationController
 
   # GET /deploys/new
   def new
-    # for the drop-down lists
-    @projects = Project.all.map {|p| ["#{p.account}/#{p.repository}", p.id] }
+    get_projects
 
     @deploy = Deploy.new
-    @deploy.requestor = current_user
   end
 
   # GET /deploys/1/edit
   def edit
+    get_projects
   end
 
   # POST /deploys
   # POST /deploys.json
   def create
     @deploy = Deploy.new(deploy_params)
+    @deploy.requestor = current_user
 
     respond_to do |format|
       if @deploy.save
@@ -75,5 +75,9 @@ class DeploysController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def deploy_params
       params.require(:deploy).permit(:project_id, :requestor_id, :pull_request, :state, :sha, :branch)
+    end
+
+    def get_projects
+      @projects = Project.all.map {|p| ["#{p.account}/#{p.repository}", p.id] }
     end
 end
