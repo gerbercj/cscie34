@@ -1,6 +1,6 @@
 class DeploysController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_deploy, only: [:show, :edit, :update, :destroy]
+  before_action :set_deploy, only: [:show, :edit, :update, :destroy, :details]
 
   # GET /deploys
   # GET /deploys.json
@@ -23,6 +23,10 @@ class DeploysController < ApplicationController
   # GET /deploys/1/edit
   def edit
     get_projects
+  end
+
+  # GET /deploys/1/details
+  def details
   end
 
   # POST /deploys

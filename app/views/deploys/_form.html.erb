@@ -22,4 +22,16 @@
   <div class="actions">
     <%= f.submit %>
   </div>
+
+  <script>
+    $('#deploy_project_id').change(function() {
+      console.log('tagEvent: Change Deploy Project');
+      ll('tagEvent', 'Change Deploy Project');
+    }).change();
+
+    $('#deploy_pull_request').change(function() {
+      console.log('tagEvent: Change Deploy Pull Request');
+      ll('tagEvent', 'Change Deploy Pull Request');
+    }).change();
+  </script>
 <% end %>

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :deploy_events
 
   resources :deploys
+  get '/deploys/:id/details', to: 'deploys#details'
 
   resources :users
 
