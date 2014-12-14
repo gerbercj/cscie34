@@ -18,31 +18,59 @@
   <div class="control-group">
     <%= f.label :project_id, :class => 'control-label' %>
     <div class="controls">
-      <%= f.select :project_id, options_for_select(@projects), :class => 'form-control' %>
+      <%= f.select :project_id, options_for_select(@projects), {}, :multiple => true, :class => 'form-control' %>
     </div>
     <%= error_span(@deploy[:project_id]) %>
   </div>
   <div class="control-group">
     <%= f.label :pull_request, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :pull_request, :class => 'form-control' %>
+      <%= f.select :pull_request, [], {}, :multiple => true, :class => 'form-control' %>
     </div>
     <%= error_span(@deploy[:pull_request]) %>
   </div>
 
-  <%= f.submit nil, :class => 'btn btn-primary' %>
-  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-            deploys_path, :class => 'btn btn-default' %>
+  <div class="button-group">
+    <%= f.submit "Request Deployment", :class => 'btn btn-primary' %>
+    <br>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+              deploys_path, :class => 'btn btn-default' %>
+    <br>
+    <span id='migration_warning' class='hidden'>WARNING: This request contains<br>database migrations.</span>
+    </p>
+  </div>
 
   <script>
-    $('#deploy_project_id').change(function() {
-      console.log('tagEvent: Change Deploy Project');
-      ll('tagEvent', 'Change Deploy Project');
-    }).change();
+    var pullRequests = <%= @pull_requests.to_json.html_safe %>;
 
-    $('#deploy_pull_request').change(function() {
-      console.log('tagEvent: Change Deploy Pull Request');
-      ll('tagEvent', 'Change Deploy Pull Request');
-    }).change();
+    function prList(prs) {
+      var result = '<select class="form-control" id="deploy_pull_request" multiple="multiple" name="deploy[pull_request][]">';
+      for (pr of Object.keys(prs).sort().reverse()) {
+        var name = "";
+        result = result.concat('<option value="'+pr+'">');
+        if (prs[pr].status == "pass")
+          name = prs[pr].name.concat(" ✔︎")
+        else
+          name = prs[pr].name.concat(" ✘");
+        result = result.concat([pr, name, prs[pr].description].join(' | '));
+        result = result.concat('</option>');
+      };
+      return result.concat('</select>');
+    };
+
+    $('#deploy_project_id').change(function(e) {
+      var projectPRs = pullRequests[e.target.selectedOptions[0].text];
+      $('#deploy_pull_request').html(prList(projectPRs));
+    });
+
+    $('#deploy_pull_request').change(function(e) {
+      var projectPRs = pullRequests[$('#deploy_project_id')[0].selectedOptions[0].text];
+      var selectedPR = projectPRs[e.target.selectedOptions[0].text.split(' ')[0]];
+      if (selectedPR.has_migrations)
+        $('#migration_warning').removeClass('hidden')
+      else
+        $('#migration_warning').addClass('hidden');
+    });
   </script>
+
 <% end %>

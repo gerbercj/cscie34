@@ -16,6 +16,7 @@ class DeploysController < ApplicationController
   # GET /deploys/new
   def new
     get_projects
+    get_pull_requests
 
     @deploy = Deploy.new
   end
@@ -27,17 +28,18 @@ class DeploysController < ApplicationController
 
   # GET /deploys/1/details
   def details
+    @project = Project.find(@deploy.project)
+    @pull_request = github.pull_request("#{@project.account}/#{@project.repository}", @deploy.pull_request)
   end
 
   # POST /deploys
   # POST /deploys.json
   def create
-    @deploy = Deploy.new(deploy_params)
-    @deploy.requestor = current_user
+    @deploy = Deploy.new(create_deploy_params)
 
     respond_to do |format|
       if @deploy.save
-        format.html { redirect_to @deploy, notice: 'Deploy was successfully created.' }
+        format.html { redirect_to action: :details, id: @deploy.id }
         format.json { render :show, status: :created, location: @deploy }
       else
         format.html { render :new }
@@ -81,7 +83,28 @@ class DeploysController < ApplicationController
       params.require(:deploy).permit(:project_id, :requestor_id, :pull_request, :state, :sha, :branch)
     end
 
+    def create_deploy_params
+      {
+        :project_id   => params[:deploy][:project_id].last,
+        :pull_request => params[:deploy][:pull_request].last,
+        :requestor    => current_user
+      }
+    end
+
     def get_projects
       @projects = Project.all.map {|p| ["#{p.account}/#{p.repository}", p.id] }
+    end
+
+    def get_pull_requests
+      @pull_requests = {}
+      github.repositories.each do |r|
+        @pull_requests[r] = Hash[github.pull_requests(r).map do |pr|
+          [pr, github.pull_request(r, pr)]
+        end]
+      end
+    end
+
+    def github
+      @github ||= FakeGithub.new
     end
 end

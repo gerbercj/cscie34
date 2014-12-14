@@ -13,3 +13,109 @@
  *= require_tree .
  *= require_self
  */
+
+.container {
+  width: 100%;
+}
+
+.deploy .control-group {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.deploy .button-group {
+  float: right;
+  padding-top: 25px;
+  text-align: right;
+}
+
+.deploy #deploy_pull_request {
+  max-width: calc(100vw - 370px);
+}
+
+.new-deploy-footer {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.new-deploy-table {
+  padding: 10px;
+  display: inline-block;
+  border: #ccc 1px solid;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.new-deploy-table th,td {
+  border: #ccc 1px solid;
+  padding: 3px;
+}
+
+#migration_warning {
+  color: red;
+}
+
+.deploy_details .header {
+  display: inline-block;
+}
+
+.deploy_details #github_repository {
+  font-size: 2.5em;
+}
+
+.deploy_details #github_link {
+  font-size: 2.5em;
+  text-decoration: underline;
+}
+
+.deploy_details #pull_request {
+  font-size: 1.2em;
+}
+
+.deploy_details .button-group {
+  float: right;
+  text-align: right;
+}
+
+.deploy_details h2,h3,h4 {
+  font-size: 16px;
+}
+
+.deploy_details h4 {
+  margin-top: 4px;
+  padding-top: 6px;
+  border-top: #ccc 1px solid;
+}
+
+.deploy_details table {
+  margin: 10px;
+  border: #ccc 1px solid;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.deploy_details th,td {
+  border: #ccc 1px solid;
+  padding: 3px;
+}
+
+.deploy_details td .success {
+  color: green;
+}
+
+.deploy_details td .failure {
+  color: red;
+}
+
+.btn.success {
+  color: white;
+  background-color: green;
+}
+
+.btn.failure {
+  color: white;
+  background-color: red;
+}
+

@@ -1,5 +1,35 @@
 <%- model_class = Deploy -%>
 <div class="page-header">
+<!--
   <h1><%=t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human.titleize %></h1>
+-->
+  <h1>Deployment Request</h1>
 </div>
 <%= render :partial => 'form' %>
+
+<div class="new-deploy-footer">
+  <div class="new-deploy-table">
+    Active Deployments:
+    <table>
+      <thead>
+        <tr><th>Project</th><th>Deployer</th><th>Start Time</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>gerbercj/event_service</td><td>Chris Gerber</td><td>2014-12-06 17:24</td><td>Verifying</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="new-deploy-table">
+    On-call employees:
+    <table>
+      <thead>
+        <tr><th>Team</th><th>Employee</th><th>End Time</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Operations</td><td>Chris Gerber</td><td>2014-12-25 08:00</td></tr>
+        <tr><td>Customer Server</td><td>Bob Smith</td><td>2014-12-25 08:00</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+

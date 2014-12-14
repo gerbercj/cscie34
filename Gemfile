@@ -75,4 +75,4 @@ group :test do
   gem 'factory_girl_rails'
 end
 
-ruby "2.1.4"
+ruby "2.1.5"

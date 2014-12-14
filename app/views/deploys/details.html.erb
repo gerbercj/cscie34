@@ -1,7 +1,117 @@
-<script>
-  console.log('tagScreen: Deploy Details');
-  ll('tagScreen', 'Deploy Details');
-</script>
+<div class="deploy_details">
+  <div class="header">
+    <h2>
+      <span id="github_repository">
+        <%= @project.account %> /
+        <%= @project.repository %>:
+      </span>
+      <span id="github_link">
+        <%= link_to("PR ##{@deploy.pull_request}", "http://github.com/#{@project.account}/#{@project.repository}/pull/#{@deploy.pull_request}", :class => '.pull_request_link') %>
+      </span>
+    </h2>
+    <h3>
+      <span id="pull_request">
+        <%= @pull_request[:name] %>:
+        <%= @pull_request[:description] %>
+      </span>
+    </h3>
+  </div>
+  <div class="button-group">
+    <%= link_to "Roll Back", deploys_path, :class => 'btn btn-default failure' %>
+    <%= link_to "Verification Successful", deploys_path, :class => 'btn btn-default success hidden' %>
+  </div>
 
-<%= link_to t('.back', :default => t("helpers.links.back")),
-              deploys_path, :class => 'btn btn-default'  %>
+  <div class='review-details'>
+    <h4>Details Requiring Review:</h4>
+    <table>
+      <thead>
+        <tr><th>Items to review</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>None</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class='additional-details'>
+    <h4>Details for Verification:</h4>
+    <table>
+      <thead>
+        <tr><th>Time</th><th>Event</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+  <div class='custom-queries'>
+    <h4>Custom Query Results:</h4>
+    <table>
+      <thead>
+        <tr><th>Query</th><th>Result</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Record count</td><td>50</td><td><span class="success">✔︎</span></td></tr>
+        <tr><td>Data updates correctly</td><td>true</td><td><span class="success">✔︎</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class='custom-commands'>
+    <h4>Custom Command Results:</h4>
+    <table>
+      <thead>
+        <tr><th>Command</th><th>Parameters</th><th>Go</th></tr>
+      </thead>
+      <tbody>
+      <tr><td>Lookup Offer By ID</td><td>21</td><td>▶︎</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%= link_to t('.back', :default => t("helpers.links.back")), deploys_path, :class => 'btn btn-default'  %>
+
+<script>
+  var fakeLogStream = [
+    {addl:['Starting deploy','','']},
+    {addl:['Spec run complete (#54)','Success','http://jenkins.tapjoy.net/jobs/<%= @project.repository %>_PRs/54)']},
+    {addl:['Packaging request complete (#21)','Success','http://jenkins.tapjoy.net/jobs/slug-builder/21)']},
+    {addl:['Verifier check-in complete','Success','']},
+    {addl:['Test server selected','ip-123-45-67-89','http://newrelic.com/ip-123-45-67-89']},
+    {addl:['Test server selected','ip-98-76-54-32','http://newrelic.com/ip-98-76-54-32']},
+    {addl:['Deploy complete to ip-123-45-67-89','Failure','Deployment Details B 123.45.67.89'], review:'Deploy failed to ip-123-45-67-89'},
+    {addl:['Deploy complete to ip-98-76-54-32','Success','Deployment Details B 98.76.54.32']},
+    {addl:['Ending deploy','','']}
+  ];
+
+  var tick_count = 0;
+
+  function tick() {
+    if (tick_count >= fakeLogStream.length)
+      clearTick()
+    else {
+      var addl_tbody = $('.additional-details tbody');
+      var addl = fakeLogStream[tick_count]['addl'];
+      if (addl[1] === 'Success')
+        addl[1] = '<span class="success">'+addl[1]+'</span>';
+      if (addl[1] === 'Failure')
+        addl[1] = '<span class="failure">'+addl[1]+'</span>';
+      addl_tbody.append('<tr><td>'+(new Date).toLocaleTimeString()+'</td><td>'+addl[0]+'</td><td><a href="'+addl[2]+'">'+addl[1]+'</a></td></tr>');
+      if (addl[0] === 'Ending deploy') {
+        $('.btn.success').removeClass('hidden');
+      };
+      if (!(typeof fakeLogStream[tick_count]['review'] === "undefined")) {
+        var review_tbody = $('.review-details tbody');
+        var review = fakeLogStream[tick_count]['review'];
+        if (review_tbody.children().children().text() === "None")
+          review_tbody.text("");
+        review_tbody.append('<tr><td><span class="failure">'+review+'</span></td></tr>');
+      };
+      tick_count += 1;
+    };
+  };
+
+  var tick_interval = window.setInterval(tick, 2000);
+
+  function clearTick() {
+    window.clearInterval(tick_interval);
+  };
+</script>
