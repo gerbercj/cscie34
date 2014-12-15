@@ -31,7 +31,7 @@
   </div>
 
   <div class="button-group">
-    <%= f.submit "Request Deployment", :class => 'btn btn-primary' %>
+    <%= f.submit "Request Deployment", :class => 'btn btn-primary disabled' %>
     <br>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
               deploys_path, :class => 'btn btn-default' %>
@@ -61,11 +61,13 @@
     $('#deploy_project_id').change(function(e) {
       var projectPRs = pullRequests[e.target.selectedOptions[0].text];
       $('#deploy_pull_request').html(prList(projectPRs));
+      $('.btn-primary').addClass('disabled');
     });
 
     $('#deploy_pull_request').change(function(e) {
       var projectPRs = pullRequests[$('#deploy_project_id')[0].selectedOptions[0].text];
       var selectedPR = projectPRs[e.target.selectedOptions[0].text.split(' ')[0]];
+      $('.btn-primary').removeClass('disabled');
       if (selectedPR.has_migrations)
         $('#migration_warning').removeClass('hidden')
       else
